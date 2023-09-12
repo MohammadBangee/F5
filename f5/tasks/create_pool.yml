@@ -1,0 +1,11 @@
+- name: Create pool
+  bigip_pool:
+    state: present
+    name: "{{ pool_name }}"
+    partition: "{{ partition }}"
+    lb_method: "{{ lb_method }}"
+    provider:
+      server: "{{ f5_ip }}"
+      user: "{{ f5_username }}"
+      password: "{{ f5_password }}"
+  delegate_to: localhost

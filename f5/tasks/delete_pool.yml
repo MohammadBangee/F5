@@ -1,0 +1,10 @@
+- name: Delete pool
+  bigip_pool:
+    state: absent
+    name: "{{ pool_name }}"
+    partition: "{{ partition }}"
+    provider:
+      server: "{{ f5_ip }}"
+      user: "{{ f5_username }}"
+      password: "{{ f5_password }}"
+  delegate_to: localhost
