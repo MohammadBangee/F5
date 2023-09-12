@@ -16,8 +16,8 @@
         context: server-side
       - name: ilx
         context: client-side
-    policies: "{{ policies }}"
-    enabled_vlans: "{{ enabled_vlans }}"
+    policies: "{{ policies.split('\n') }}"
+    enabled_vlans: "{{ enabled_vlans.split('\n') }}"
     ip_protocol: "{{ ip_protocol }}"
     provider:
       server: "{{ f5_ip }}"
