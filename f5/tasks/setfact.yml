@@ -51,8 +51,6 @@
 - debug:
     var: provider
 - debug:
-    var: item.enabled_vlans
-- debug:
     var: f5_ip
 - debug:
     var: f5_username
