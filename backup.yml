@@ -1,0 +1,27 @@
+---
+- name: Set archive name postfix data/time
+  local_action: command date +%Y%m%d-%H
+  run_once: true
+  register: date
+
+- name: Create UCS
+  bigip_command:
+    provider: "{{ profile }}"
+    commands:
+      - "tmsh save sys ucs {{ target_hosts }}-{{ date['stdout'] }}.ucs"
+  delegate_to: localhost
+
+- name: Fetch UCS archive
+  bigip_ucs_fetch:
+    src: "backup-{{ target_hosts }}-{{ date['stdout'] }}.ucs"
+    dest: "/tmp/{{ target_hosts }}-{{ date['stdout'] }}.ucs"
+    # dest: "/var/lib/pulp/ansible/f5/{{ inventory_hostname }}-{{ date['stdout'] }}.ucs"
+    provider: "{{ profile }}"
+  delegate_to: localhost
+
+- name: Remove UCS file
+  bigip_ucs:
+    ucs: "{{ target_hosts }}-{{ date['stdout'] }}.ucs"
+    state: absent
+    provider: "{{ profile }}"
+  delegate_to: localhost

@@ -1,0 +1,40 @@
+---
+- name: Check if member already exist
+  block:
+    - bigip_device_info:
+        gather_subset:
+          - ltm-pools
+        provider: "{{ profile }}"
+      register: result
+      delegate_to: localhost
+
+    - set_fact:
+        pool: "{{ item | default() }}"
+      when: item.name == pool_name
+      loop: "{{ result.ltm_pools }}"
+
+    - debug: var=pool
+
+    - set_fact:
+        members: []
+
+    - set_fact:
+        members: "{{ members | default([]) + [item.name] }}"
+      loop: "{{ pool.members }}"
+      when: pool.members is defined
+
+    - set_fact:
+        member: "{{ member_name }}:{{ member_port }}" 
+
+- name: Add pool member
+  bigip_pool_member:
+    pool: "{{ pool_name }}"
+    partition: Common
+    name: "{{ member_name }}"
+    host: "{{ member_host }}"
+    port: "{{ member_port }}"
+    description: "{{ member_description }}"
+    state: present
+    provider: "{{ profile }}"
+  delegate_to: localhost
+  when: member not in members

@@ -1,0 +1,27 @@
+---
+- name: Fetch Device Info
+  bigip_device_info:
+    gather_subset: "{{ info_subset.split('\n') }}"
+    provider:
+      server: "{{ target_hosts }}"
+      user: "Ansible-F5"
+      password: "{{ f5_password }}"
+      validate_certs: false
+#  loop: "{{ target_hosts.split('\n') }}"
+  register: result
+  delegate_to: localhost
+
+#- name: Fetch Device Info
+#  bigip_device_info:
+#    gather_subset: "{{ info_subset }}"
+#    provider:
+#      server: "{{ target_hosts }}"
+#      user: "Ansible-F5"
+#      password: "{{ f5_password }}"
+#      validate_certs: false
+#  register: result
+#  delegate_to: localhost
+
+- name: Display Info
+  debug:
+    var: result

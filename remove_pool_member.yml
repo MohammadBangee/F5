@@ -1,0 +1,11 @@
+---
+- name: Remove pool member from pool
+  bigip_pool_member:
+    state: absent
+    pool: "{{ pool_name }}"
+    partition: Common
+    name: "{{ member_name }}"
+    provider: "{{ profile }}"
+    host: "{{ member_host }}"
+    port: "{{ member_port }}"
+  delegate_to: localhost
