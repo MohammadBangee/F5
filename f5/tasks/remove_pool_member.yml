@@ -5,7 +5,10 @@
     pool: "{{ pool_name }}"
     partition: Common
     name: "{{ member_name }}"
-    provider: "{{ profile }}"
+    provider:
+      server: "{{ server }}"
+      user: "{{ user }}"
+      password: "{{ password }}"
     host: "{{ member_host }}"
     port: "{{ member_port }}"
   delegate_to: localhost
