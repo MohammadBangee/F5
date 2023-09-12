@@ -4,7 +4,10 @@
     - bigip_device_info:
         gather_subset:
           - ltm-pools
-        provider: "{{ profile }}"
+        provider:
+          server: "{{ server }}"
+          user: "{{ user }}"
+          password: "{{ password }}"   
       register: result
       delegate_to: localhost
 
@@ -35,6 +38,9 @@
     port: "{{ member_port }}"
     description: "{{ member_description }}"
     state: present
-    provider: "{{ profile }}"
+    provider:
+      server: "{{ server }}"
+      user: "{{ user }}"
+      password: "{{ password }}"
   delegate_to: localhost
   when: member in members

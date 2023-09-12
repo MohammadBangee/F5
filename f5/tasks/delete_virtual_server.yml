@@ -1,0 +1,11 @@
+---
+- name: Delete virtual server
+  bigip_virtual_server:
+    state: present
+    partition: "{{ partition }}"
+    name: "{{ vs_name }}"
+    provider:
+      server: "{{ f5_ip }}"
+      user: "{{ f5_username }}"
+      password: "{{ f5_password }}"
+  delegate_to: localhost

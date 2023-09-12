@@ -6,7 +6,10 @@
 
 - name: Create UCS
   bigip_command:
-    provider: "{{ profile }}"
+    provider:
+      server: "{{ server }}"
+      user: "{{ user }}"
+      password: "{{ password }}"
     commands:
       - "tmsh save sys ucs {{ target_hosts }}-{{ date['stdout'] }}.ucs"
   delegate_to: localhost
@@ -16,12 +19,18 @@
     src: "backup-{{ target_hosts }}-{{ date['stdout'] }}.ucs"
     dest: "/tmp/{{ target_hosts }}-{{ date['stdout'] }}.ucs"
     # dest: "/var/lib/pulp/ansible/f5/{{ inventory_hostname }}-{{ date['stdout'] }}.ucs"
-    provider: "{{ profile }}"
+    provider:
+      server: "{{ server }}"
+      user: "{{ user }}"
+      password: "{{ password }}"
   delegate_to: localhost
 
 - name: Remove UCS file
   bigip_ucs:
     ucs: "{{ target_hosts }}-{{ date['stdout'] }}.ucs"
     state: absent
-    provider: "{{ profile }}"
+    provider:
+      server: "{{ server }}"
+      user: "{{ user }}"
+      password: "{{ password }}"
   delegate_to: localhost
