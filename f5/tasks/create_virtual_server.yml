@@ -9,13 +9,6 @@
     pool: "{{ pool_name }}"
     snat: "{{ snat }}"
     description: "{{ description }}"
-    profiles:
-      - http
-      - fix
-      - name: clientssl
-        context: server-side
-      - name: ilx
-        context: client-side
     policies: "{{ item.policies }}"
     enabled_vlans: "{{ item.enabled_vlans }}"
     ip_protocol: "{{ ip_protocol }}"
@@ -23,4 +16,6 @@
       server: "{{ f5_ip }}"
       user: "{{ f5_username }}"
       password: "{{ f5_password }}"
+    loop: "{{ policies.split('\n') }}"
+    loop: "{{ enabled_vlans.split('\n') }}"
   delegate_to: localhost

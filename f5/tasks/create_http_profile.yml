@@ -1,0 +1,16 @@
+- name: Create HTTP profile
+  bigip_profile_http:
+    name: "{{ profile_name}}"
+    response_chunking: rechunk
+    insert_xforwarded_for: true
+    hsts_mode: true
+    redirect_rewrite: all
+    encrypt_cookies: "item"
+    encrypt_cookie_secret: "{{ encrypt_cookie_secret }}"
+    state: present
+    provider:
+      server: "{{ f5_ip }}"
+      user: "{{ f5_username }}"
+      password: "{{ f5_password }}"
+    loop: "{{ cookies.split('\n')}}"
+  delegate_to: localhost

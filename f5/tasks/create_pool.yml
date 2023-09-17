@@ -3,9 +3,13 @@
     state: present
     name: "{{ pool_name }}"
     partition: "{{ partition }}"
+    service_down_action: "{{ service_down_action }}"
     lb_method: "{{ lb_method }}"
+    monitors: "item"
+    monitor_type: "{{ monitor_type }}"
     provider:
       server: "{{ f5_ip }}"
       user: "{{ f5_username }}"
       password: "{{ f5_password }}"
+    loop: "{{ monitors.split('\n') }}"
   delegate_to: localhost

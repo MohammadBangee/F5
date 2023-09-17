@@ -1,0 +1,9 @@
+- name: Create a persistence cookie profile
+  bigip_profile_persistence_cookie:
+    name: "{{ cookie_profile_name }}"
+    cookie_name: "{{ cookie_profile_name }}"
+    provider:
+      server: "{{ f5_ip }}"
+      user: "{{ f5_username }}"
+      password: "{{ f5_password }}"
+  delegate_to: localhost
