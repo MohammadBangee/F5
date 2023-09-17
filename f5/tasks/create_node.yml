@@ -1,0 +1,11 @@
+- name: Create node
+  bigip_node:
+    host: "{{ node_ip }}"
+    name: "{{ node_name }}"
+    monitors: "item"
+    provider:
+      server: "{{ f5_ip }}"
+      user: "{{ f5_username }}"
+      password: "{{ f5_password }}"
+  delegate_to: localhost
+  loop: "{{ monitors.split('\n') }}"

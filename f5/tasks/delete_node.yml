@@ -1,0 +1,9 @@
+- name: Delete node
+  bigip_node:
+    state: absent
+    name: "{{ node_name }}"
+    provider:
+      server: "{{ f5_ip }}"
+      user: "{{ f5_username }}"
+      password: "{{ f5_password }}"
+  delegate_to: localhost
